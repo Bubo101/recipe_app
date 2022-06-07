@@ -22,6 +22,9 @@ def log_rating(request, recipe_id):
             except Recipe.DoesNotExist:
                 return redirect("recipes_list")
     return redirect("recipe_detail", pk=recipe_id)
+    # wrote try/except to fix error of internal page not
+    # found when deleted while someone is rating it
+    # redirects back to home
 
 
 class RecipeListView(ListView):

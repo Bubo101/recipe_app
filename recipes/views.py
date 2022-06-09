@@ -47,7 +47,7 @@ class RecipeCreateView(LoginRequiredMixin, CreateView):
     template_name = "recipes/new.html"
     fields = ["name", "description", "image"]
     success_url = reverse_lazy("recipes_list")
-
+    # need save_m2m method
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)

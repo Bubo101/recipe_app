@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main class="recipe-detail">
+<div>
+  <a href="{% url 'mp_edit' plan.id %}">Edit</a>
+  <a href="{% url 'mp_delete' plan.id %}">Delete</a>
+</div>
+  <h1>{{ plan.name }} By 
+    {{ plan.owner }}
+  </h1>
+    <div>Date to be served {{plan.date | default_if_none:"Unknown"}}</div>
+
+    <h2>Recipes in meal plan:<h2>
+
+    
+
+      {% for recipe in plan.recipes.all %}
+      <p><a href= "{% url 'recipe_detail' recipe.id %}">{{ recipe.name }}</a></p>
+
+      {% endfor %}
+    </main>      
+{% endblock content %} 

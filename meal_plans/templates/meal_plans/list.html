@@ -1,1 +1,21 @@
-{% extends 'base.html' %}
+{% extends 'paginate.html' %}
+
+
+{% block content %}
+  
+<div>
+  <h3><a href='{% url "mp_new" %}'>Create New Meal Plan</h3>
+  </div>
+  <main class="recipe-grid">
+ 
+    {% for mealplan in meal_plans %}
+      <div class="recipe-card">
+      <h2 class="recipe-card-title">
+      <a href="{% url 'mp_detail' mealplan.pk %}">{{ mealplan.name }}</a>
+      </h2>
+    <p class="recipe-card-date">{{ recipe.updated }}</p>
+  </div>
+  {% endfor %}
+</main>
+{% endblock content %}  
+

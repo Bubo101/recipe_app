@@ -32,6 +32,7 @@
                 
                 {% if user.is_authenticated %}
                 <a href="{% url 'mp_list' %}">Meal Plans</a>
+                <a href="{% url 'shopping_list' %}">Shopping List With {{user.shopping_items.all| length}} Items</a>
     
                 {% endif %}
 

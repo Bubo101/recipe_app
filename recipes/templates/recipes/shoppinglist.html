@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main>
+    <h1>Shopping List</h1>
+    <div>
+    {% for item in shopping_lists %}
+    <div class="recipe-card">
+      <h2 class="recipe-card-title"></h2>
+      <li>
+      <a href="{% url 'shopping_list' %}">{{ item.food_item }}</a> <br>
+      </li>
+    </div>
+    <div>
+    {% endfor %}
+    <form method="post" action="{% url 'delete_shopping' %}">
+        {% csrf_token %}
+        <button>Delete Shopping List</button>
+      </form>
+</main>
+
+{% endblock content %}

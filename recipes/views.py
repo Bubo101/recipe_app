@@ -1,4 +1,5 @@
 from ast import Delete
+from atexit import register
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic.detail import DetailView
@@ -40,6 +41,7 @@ class RecipeDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        # add rating form to context
         context["rating_form"] = RatingForm()
 
         food_list = []
@@ -49,13 +51,15 @@ class RecipeDetailView(DetailView):
 
         context["food_list"] = food_list
 
+        context["servings"] = self.request.GET.get("servings")
+
         return context
 
 
 class RecipeCreateView(LoginRequiredMixin, CreateView):
     model = Recipe
     template_name = "recipes/new.html"
-    fields = ["name", "description", "image"]
+    fields = ["name", "description", "image", "servings"]
     success_url = reverse_lazy("recipes_list")
     # need save_m2m method
     def form_valid(self, form):
@@ -66,7 +70,7 @@ class RecipeCreateView(LoginRequiredMixin, CreateView):
 class RecipeUpdateView(LoginRequiredMixin, UpdateView):
     model = Recipe
     template_name = "recipes/edit.html"
-    fields = ["name", "author", "description", "image"]
+    fields = ["name", "author", "description", "image", "servings"]
     success_url = reverse_lazy("recipes_list")
 
 

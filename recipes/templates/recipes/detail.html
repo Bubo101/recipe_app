@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load mathfilters %}
+{% load custom_tags %}
 
 {% block content %}
 {% load markdownify %}
@@ -16,6 +18,27 @@
     Created on {{ recipe.created }} |
     Updated on {{ recipe.updated }}
   </p>
+
+  {% if recipe.servings %}
+  <p>
+    Serves {{ servings|default_if_none:recipe.servings }}
+  </p>
+
+  <!-- new form -->
+  <form method="GET">
+    <input required type="number" name="servings">
+    <button class="button">Resize</button>
+  </form>
+
+{% endif %}
+
+  {% comment %} <p>Servings: {{recipe.servings}}</p>
+    <form method="GET">
+      <input placeholder="{{recipe.servings}}" type="number" name="servings">
+      <button class="button">Serving Size</button>
+    </div>
+  </form>  {% endcomment %}
+
   <form method="post" action="{% url 'recipe_rating' recipe.id %}">
     {% csrf_token %}
     <div class="rating-form-grid">
@@ -36,7 +59,7 @@
     <tbody>
       {% for ingredient in recipe.ingredients.all %}
       <tr>
-        <td>{{ ingredient.amount }}</td>
+        <td>{{ ingredient|resize_to:servings }}</td>
         <td>{{ ingredient.measure.name }}</td>
         <td>{{ ingredient.food.name }}</td>
 
